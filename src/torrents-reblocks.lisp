@@ -40,7 +40,7 @@
             (:meta :http-equiv "Content-Type" :content "text/html; charset=utf-8") ;; useless
             (:meta :charset "UTF-8")
             (:meta :charset "UTF-8")
-            (:link :rel "stylesheet" :type "text/css" :href "../node_modules/semantic-ui/dist/semantic.min.css")
+            (:link :rel "stylesheet" :type "text/css" :href "https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" )
             (:title *title*))
 
            (:h1 "cl-torrents")
