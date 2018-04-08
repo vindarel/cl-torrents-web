@@ -13,14 +13,29 @@ https://github.com/40ants/weblocks/blob/reblocks/docs/source/quickstart.rst
    (torrents-reblocks:start)
 #+END_SRC
 
-#+html: <p align='center'><img src='torrents-web.png' /></p>
+#+html: <p align='center'><img src='img.png' /></p>
 
-#+html: <p align='center'><img src='torrents-web-magnet.png' /></p>
+#+html: <p align='center'><img src='img-magnet.png' /></p>
 
 ** Installation
+
+   To clone at =../=:
+
+: https://github.com/vindarel/cl-torrents
 
    To clone in local-projects:
 
 : https://github.com/40ants/weblocks
 
-: https://github.com/vindarel/cl-torrents
+: https://github.com/40ants/weblocks-ui
+
+
+   To build an executable:
+
+: make build
+
+   run it (*buggy*):
+
+: ./torrents-web
+
+https://lisp-journey.gitlab.io/web-dev/#shipping

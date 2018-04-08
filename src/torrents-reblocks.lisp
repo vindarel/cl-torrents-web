@@ -7,13 +7,13 @@
   (:import-from #:weblocks-ui/form
                 #:with-html-form
                 #:render-form-and-button)
-  (:export #:start))
+  (:export #:start
+           #:main))
 (in-package :torrents-reblocks)
 
 (defapp torrents)
 
 (defvar *port* (find-port:find-port))
-
 
 (defparameter *title* "cl-torrents")
 
@@ -89,4 +89,22 @@
   (weblocks/server:start :port *port*))
 
 ;; restart
-(weblocks/debug:reset-latest-session)
+;; (weblocks/debug:reset-latest-session)
+
+(defun main ()
+  (defvar *port* (find-port:find-port))
+  (start)
+  (handler-case (bt:join-thread (find-if (lambda (th)
+                                             (search "hunchentoot" (bt:thread-name th)))
+                                         (bt:all-threads)))
+    (#+sbcl sb-sys:interactive-interrupt
+      #+ccl  ccl:interrupt-signal-condition
+      #+clisp system::simple-interrupt-condition
+      #+ecl ext:interactive-interrupt
+      #+allegro excl:interrupt-signal
+      () (progn
+           (format *error-output* "Aborting.~&")
+           ;; (weblocks:stop)
+           (uiop:quit 1))
+    ;; for others, unhandled errors (we might want to do the same).
+    (error (c) (format t "Woops, an unknown error occured:~&~a~&" c)))))
