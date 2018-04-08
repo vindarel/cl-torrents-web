@@ -1,0 +1,26 @@
+* Torrents-reblocks
+
+Search for torrents.
+
+Interactive Weblocks interface. It's working \o/
+
+https://github.com/40ants/weblocks/blob/reblocks/docs/source/quickstart.rst
+
+** Usage
+
+#+BEGIN_SRC lisp
+   (ql:quickload "torrents-reblocks")
+   (torrents-reblocks:start)
+#+END_SRC
+
+#+html: <p align='center'><img src='torrents-web.png' /></p>
+
+#+html: <p align='center'><img src='torrents-web-magnet.png' /></p>
+
+** Installation
+
+   To clone in local-projects:
+
+: https://github.com/40ants/weblocks
+
+: https://github.com/vindarel/cl-torrents
