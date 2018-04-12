@@ -34,8 +34,21 @@ https://github.com/40ants/weblocks/blob/reblocks/docs/source/quickstart.rst
 
 : make build
 
-   run it (*buggy*):
+   run it:
 
 : ./torrents-web
+#+BEGIN_SRC text
+ <INFO> [16:35:53] weblocks/server server.lisp (start) -
+  Starting weblocks WEBLOCKS/SERVER::PORT: 40000
+  WEBLOCKS/SERVER::SERVER-TYPE: :HUNCHENTOOT DEBUG: T
+#+END_SRC
 
 https://lisp-journey.gitlab.io/web-dev/#shipping
+
+** Troubleshooting
+
+#+BEGIN_SRC text
+Don't know how to REQUIRE sb-cltl2.
+#+END_SRC
+
+Set =SBCL_HOME= to the output of =(sb-int:sbcl-homedir-pathname)=.
