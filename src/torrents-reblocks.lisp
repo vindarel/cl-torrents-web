@@ -15,7 +15,7 @@
 
 (defvar *port* (find-port:find-port))
 
-(defparameter *title* "cl-torrents")
+(defparameter *title* "torrents-web")
 
 (defun assoc-value (alist key &key (test #'equalp))
   ;; Don't import Alexandria just for that.
@@ -24,7 +24,7 @@
   (cdr (assoc key alist :test test)))
 
 (defmethod weblocks/session:init ((app torrents))
-  (let (results magnet)
+  (let (results magnet clicked)
     (flet ((query (&key query &allow-other-keys)
              (format t "searching for ~a~&" query)
              (setf results (async-torrents query))
@@ -33,6 +33,8 @@
              (declare (ignorable index))
              (format t "see-magnet~&")
              (setf magnet (magnet (parse-integer index)))
+             (when index
+               (setf clicked (parse-integer index)))
              (weblocks/widget:update (weblocks/widgets/root:get))))
       (lambda ()
         (with-html
@@ -55,9 +57,6 @@
               (:input :type "submit"
                       :value "Search")))
 
-           (when magnet
-             (:h4 (format nil "magnet link:"))
-             (:div magnet))
            (when results
              (:table :class "ui selectable table"
                      (:thead
@@ -72,6 +71,11 @@
                          (:tr
                           (:td (:a :href (assoc-value it :href)
                                    (assoc-value it :title)))
+                          (when (and clicked
+                                     (= clicked
+                                        (position it results)))
+                            (:h4 (format nil "magnet link:"))
+                            (:div magnet))
                           (:td (assoc-value it :seeders))
                           (:td (assoc-value it :leechers))
                           (:td (assoc-value it :source))
@@ -88,11 +92,13 @@
   (weblocks/debug:on)
   (weblocks/server:start :port *port*))
 
-;; restart
-;; (weblocks/debug:reset-latest-session)
+(defun reset ()
+  "Restart (development), take code changes into account."
+  (weblocks/debug:reset-latest-session))
 
 (defun main ()
   (defvar *port* (find-port:find-port))
+
   (start)
   (handler-case (bt:join-thread (find-if (lambda (th)
                                              (search "hunchentoot" (bt:thread-name th)))
