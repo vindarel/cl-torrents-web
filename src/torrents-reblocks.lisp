@@ -1,19 +1,26 @@
 (defpackage torrents-reblocks
   (:use #:cl
         #:torrents ;; local project
+        #:weblocks-ui/form
         #:weblocks/html)
   (:import-from #:weblocks/app
                 #:defapp)
-  (:import-from #:weblocks-ui/form
-                #:with-html-form
-                #:render-form-and-button)
+  (:import-from #:weblocks/widget
+                #:render
+                #:update
+                #:defwidget)
+  (:import-from #:weblocks/actions
+                #:make-js-action)
+
   (:export #:start
            #:main))
 (in-package :torrents-reblocks)
 
 (defapp torrents)
 
-(defvar *port* (find-port:find-port))
+(weblocks/debug:on)
+
+(defvar *port* (find-port:find-port :min 4000))
 
 (defparameter *title* "torrents-web")
 
@@ -23,20 +30,59 @@
   ;; http://quickutil.org/lists/
   (cdr (assoc key alist :test test)))
 
-(defmethod weblocks/session:init ((app torrents))
-  (let (results magnet clicked)
+(defwidget result ()
+  ((torrent
+    :initarg :torrent
+    :accessor torrent)
+   ;xxx the magnet should be in a "torrent" object, not alist.
+   (magnet
+    :initform nil
+    :accessor result-magnet)
+   (clicked-p
+    :initform nil
+    :accessor result-clicked-p)))
+
+(defun make-result (torrent)
+  (make-instance 'result :torrent torrent))
+
+(defmethod render ((it result))
+  (let ((torrent (torrent it)))
+    (with-html
+      (:tr
+       (:td (:a :href (assoc-value torrent :href)
+                (assoc-value torrent :title)))
+       (:td (assoc-value torrent :seeders))
+       (:td (assoc-value torrent :leechers))
+       (:td (assoc-value torrent :source))
+       (when (result-magnet it)
+         (:h4 (format nil "magnet link:"))
+         (:div (result-magnet it)))))))
+
+(defwidget results-list ()
+  ((results
+    :initarg :results
+    :accessor results)))
+
+(defun make-results-list (results)
+  (make-instance 'results-list :results results))
+
+(defmethod render ((it results-list))
+  (let ((results (results it)))
     (flet ((query (&key query &allow-other-keys)
              (format t "searching for ~a~&" query)
-             (setf results (async-torrents query))
+             (log:info "searching for" query)
+             (setf (results it) (loop for res in  (async-torrents query)
+                                   :collect (make-result res)))
              (weblocks/widget:update (weblocks/widgets/root:get)))
            (see-magnet (&key index &allow-other-keys)
              (declare (ignorable index))
              (format t "see-magnet~&")
-             (setf magnet (magnet (parse-integer index)))
              (when index
-               (setf clicked (parse-integer index)))
-             (weblocks/widget:update (weblocks/widgets/root:get))))
-      (lambda ()
+               (setf index (parse-integer index))
+               (let ((result (nth index results)))
+                 (setf (result-magnet result) (magnet index))
+                 (weblocks/widget:update result)))))
+      (with-html
         (with-html
           (:doctype)
           (:html
@@ -50,12 +96,12 @@
            (:h1 "cl-torrents")
            (with-html-form (:POST #'query)
              (:div :class "ui action input"
-              (:input :type "text"
-                      :name "query"
-                      :class "ui input"
-                      :placeholder "search...")
-              (:input :type "submit"
-                      :value "Search")))
+                   (:input :type "text"
+                           :name "query"
+                           :class "ui input"
+                           :placeholder "search...")
+                   (:input :type "submit"
+                           :value "Search")))
 
            (when results
              (:table :class "ui selectable table"
@@ -67,26 +113,19 @@
                       (:th ))
                      (:tbody)
                      (dolist (it results)
-                       (with-html
-                         (:tr
-                          (:td (:a :href (assoc-value it :href)
-                                   (assoc-value it :title)))
-                          (when (and clicked
-                                     (= clicked
-                                        (position it results)))
-                            (:h4 (format nil "magnet link:"))
-                            (:div magnet))
-                          (:td (assoc-value it :seeders))
-                          (:td (assoc-value it :leechers))
-                          (:td (assoc-value it :source))
-                          (:td
-                           (with-html-form (:POST #'see-magnet)
-                             (:input :type "hidden"
-                                     :name "index"
-                                     :value (position it results))
-                             (:input :type "submit"
-                                     :class "ui primary button"
-                                     :value "magnet"))))))))))))))
+                       (render it)
+                       (:td
+                        (with-html-form (:POST #'see-magnet)
+                          (:input :type "hidden"
+                                  :name "index"
+                                        ;TODO:
+                                  :value (position it results))
+                          (:input :type "submit"
+                                  :class "ui primary button"
+                                  :value "magnet"))))))))))))
+
+(defmethod weblocks/session:init ((app torrents))
+  (make-results-list nil))
 
 (defun start ()
   (weblocks/debug:on)

@@ -11,7 +11,8 @@
                :torrents
                :find-port
                :spinneret
-               :bordeaux-threads)
+               :bordeaux-threads
+               :log4cl)
   :components ((:module "src"
                 :components
                 ((:file "torrents-reblocks"))))
