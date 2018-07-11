@@ -1,9 +1,9 @@
 LISP?=sbcl
 
 build:
-	$(LISP) --quit \
+	$(LISP) --non-interactive \
 		--load ../cl-torrents/torrents.asd \
 		--eval '(ql:quickload :torrents)' \
 		--load torrents-reblocks.asd \
 		--eval '(ql:quickload "torrents-reblocks")' \
-		--eval '(asdf:make :torrents-reblocks)' 
+		--eval '(asdf:make :torrents-reblocks)'
