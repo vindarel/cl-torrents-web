@@ -48,7 +48,7 @@
 (defmethod render ((it result))
   (let ((torrent (result-torrent it)))
     (flet ((see-magnet (&key &allow-other-keys)
-             (format t "see-magnet of widget ~a~&" (result-torrent it))
+             (log:info "see-magnet of widget ~a~&" (result-torrent it))
              (setf (result-magnet it) (magnet-link-from torrent))
              (update it)))
       (with-html
@@ -148,4 +148,4 @@
            ;; (weblocks:stop)
            (uiop:quit 1))
     ;; for others, unhandled errors (we might want to do the same).
-    (error (c) (format t "Woops, an unknown error occured:~&~a~&" c)))))
+      (error (c) (format t "Woops, an unknown error occured:~&~a~&" c)))))

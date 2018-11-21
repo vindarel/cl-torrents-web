@@ -8,7 +8,7 @@
   :license ""
   :depends-on (:weblocks
                :weblocks-ui
-               :torrents
+               :torrents ;; not in Quicklisp
                :find-port
                :spinneret
                :bordeaux-threads
