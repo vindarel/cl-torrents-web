@@ -6,6 +6,7 @@
   (:import-from #:weblocks/app
                 #:defapp)
   (:import-from #:weblocks/widget
+                #:get-html-tag
                 #:render
                 #:update
                 #:defwidget)
@@ -45,6 +46,12 @@
 (defun make-result (torrent)
   (make-instance 'result :torrent torrent))
 
+(defmethod get-html-tag ((widget result))
+  "Weblocks wraps our rendered widgets' html with a div and a custom
+id named dom123. But a div before the tr makes the table display badly.
+   So, here we tell Weblocks to use a tr, not a div. And we don't write the tr a second time in our `result`'s render method."
+  :tr)
+
 (defmethod render ((it result))
   (let ((torrent (result-torrent it)))
     (flet ((see-magnet (&key &allow-other-keys)
@@ -52,9 +59,8 @@
              (setf (result-magnet it) (magnet-link-from torrent))
              (update it)))
       (with-html
-        (:tr
-         (:td (:a :href (href torrent)
-                  (title torrent)))
+        (:td (:a :href (href torrent)
+                 (title torrent)))
          (:td (seeders torrent))
          (:td (leechers torrent))
          (:td (source torrent))
@@ -62,7 +68,7 @@
           (with-html-form (:POST #'see-magnet)
             (:input :type "submit"
                     :class "ui primary button"
-                    :value "magnet"))))
+                    :value "magnet")))
         (when (result-magnet it)
            (:tr
             (:td :colspan 5
