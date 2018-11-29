@@ -46,6 +46,11 @@ http://40ants.com/weblocks/quickstart.html
 
 https://lisp-journey.gitlab.io/web-dev/#shipping
 
+** Development notes
+
+- after compiling a function and a  page refresh, we keep the state of
+  the app. Only a =reset= looses it.
+
 ** Troubleshooting
 
 #+BEGIN_SRC text
