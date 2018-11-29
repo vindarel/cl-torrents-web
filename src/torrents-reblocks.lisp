@@ -133,6 +133,9 @@ id named dom123. But a div before the tr makes the table display badly.
   (weblocks/debug:on)
   (weblocks/server:start :port *port*))
 
+(defun stop ()
+  (weblocks/server:stop))
+
 (defun reset ()
   "Restart (development), take code changes into account."
   (weblocks/debug:reset-latest-session))
