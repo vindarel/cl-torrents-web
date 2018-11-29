@@ -72,7 +72,7 @@ id named dom123. But a div before the tr makes the table display badly.
         (when (result-magnet it)
            (:tr
             (:td :colspan 5
-                 (:h4 (format nil "magnet link:"))
+                 (:h4 (format nil "magnet:"))
                  (:div (result-magnet it)))))))))
 
 (defwidget results-list ()
@@ -104,7 +104,7 @@ id named dom123. But a div before the tr makes the table display badly.
             (:link :rel "stylesheet" :type "text/css" :href "https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" )
             (:title *title*))
 
-           (:h1 "cl-torrents")
+           (:h1 (:a :href "https://github.com/vindarel/cl-torrents-web" "cl-torrents"))
            (with-html-form (:POST #'query)
              (:div :class "ui action input"
                    (:input :type "text"
