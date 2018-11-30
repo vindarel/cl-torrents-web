@@ -4,8 +4,8 @@
 
 (asdf:defsystem torrents-reblocks
   :version "0.1.0"
-  :author ""
-  :license ""
+  :author "vindarel"
+  :license "wtf public licence"
   :depends-on (:weblocks
                :weblocks-ui
                :torrents ;; not in Quicklisp
@@ -16,7 +16,7 @@
   :components ((:module "src"
                 :components
                 ((:file "torrents-reblocks"))))
-  :description ""
+  :description "An interactive web interface to the cl-torrents scraper, without a line of javascript."
 
   ;; build executable with asdf:make
   :build-operation "program-op"

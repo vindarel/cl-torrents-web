@@ -58,3 +58,5 @@ Don't know how to REQUIRE sb-cltl2.
 #+END_SRC
 
 Set =SBCL_HOME= to the output of =(sb-int:sbcl-homedir-pathname)=.
+
+LICENCE: WTF public licence.
