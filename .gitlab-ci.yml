@@ -1,0 +1,16 @@
+image: daewok/lisp-devel
+
+before_script:
+  - apt-get update -qy
+  - apt-get install -y git-core
+  - make install
+
+build:
+  # only:
+    # Only when a new tag is pushed.
+    # - tags
+  script:
+    - make build
+  artifacts:
+    paths:
+      - torrents-web

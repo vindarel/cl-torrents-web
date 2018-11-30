@@ -44,6 +44,8 @@ http://40ants.com/weblocks/quickstart.html
   WEBLOCKS/SERVER::SERVER-TYPE: :HUNCHENTOOT DEBUG: T
 #+END_SRC
 
+And access it on http://localhost:40000/torrents (warn the =torrents= suffix).
+
 https://lisp-journey.gitlab.io/web-dev/#shipping
 
 ** Development notes

@@ -6,8 +6,8 @@
   :version "0.1.0"
   :author "vindarel"
   :license "wtf public licence"
-  :depends-on (:weblocks
-               :weblocks-ui
+  :depends-on (:weblocks ;; not in Quicklisp
+               :weblocks-ui ;; not in Quicklisp
                :torrents ;; not in Quicklisp
                :find-port
                :spinneret
