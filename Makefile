@@ -15,3 +15,4 @@ install:
 	cd ~/quicklisp/local-projects/ && git clone https://github.com/40ants/log4cl-json
 	cd ~/quicklisp/local-projects/ && git clone https://github.com/40ants/weblocks
 	cd ~/quicklisp/local-projects/ && git clone https://github.com/40ants/weblocks-ui
+	cd ~/quicklisp/local-projects/ && git clone https://github.com/40ants/weblocks-parenscript
