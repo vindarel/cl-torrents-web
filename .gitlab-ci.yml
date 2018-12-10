@@ -5,7 +5,12 @@ before_script:
   - apt-get install -y git-core
   - make install
 
+# The default Gitlab stage is "test".
+stages:
+  - build
+
 build:
+  stage: build
   # only:
     # Only when a new tag is pushed.
     # - tags
