@@ -9,6 +9,8 @@
   :depends-on (:weblocks ;; not in Quicklisp
                :weblocks-ui ;; not in Quicklisp
                :torrents ;; not in Quicklisp
+               ;; in clack but separate system. See SO "hunchentoot is unknown handler".
+               :clack-handler-hunchentoot
                :find-port
                :spinneret
                :bordeaux-threads
