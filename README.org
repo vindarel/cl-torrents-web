@@ -2,7 +2,7 @@
 
 Search for torrents.
 
-Interactive Weblocks interface. It's working \o/
+This is an interactive Weblocks interface. It's working \o/
 
 http://40ants.com/weblocks/quickstart.html
 
@@ -13,6 +13,14 @@ http://40ants.com/weblocks/quickstart.html
    (ql:quickload "torrents-reblocks")
    (torrents-reblocks:start)
 #+END_SRC
+
+or download a self-contained  executable (download the latest artifact
+[[https://gitlab.com/vindarel/cl-torrents-web/-/jobs][from here]]), run it: =./torrents-web=.
+
+or clone the project and build it yourself (see below).
+
+Then visit =http://localhost:4000/torrents=:
+
 
 #+html: <p align='center'><img src='img.png' /></p>
 
@@ -28,12 +36,16 @@ http://40ants.com/weblocks/quickstart.html
 
 : https://github.com/40ants/weblocks-ui
 
+This project and its dependencies are also available in the [[https://ultralisp.org/][Ultralisp]] distribution.
 
-   To build an executable:
+
+To build an executable:
 
 : make build
 
-   run it:
+Debian dependencies are =libreadline-dev=, =libssl-dev=, =libssl1.0.2=.
+
+Run it:
 
 : ./torrents-web
 #+BEGIN_SRC text
@@ -42,19 +54,19 @@ http://40ants.com/weblocks/quickstart.html
   WEBLOCKS/SERVER::SERVER-TYPE: :HUNCHENTOOT DEBUG: T
 #+END_SRC
 
-And access it on http://localhost:40000/torrents (warn the =torrents= suffix).
+And access it on http://localhost:4000/torrents (with the =torrents= suffix).
 
-https://lisp-journey.gitlab.io/web-dev/#shipping
+** Deployment on one's private server
 
-Debian dependencies:
-
-- =libreadline-dev=, =libssl-dev=, =libssl1.0.2=.
+There is nothing special to deploy the  app to one's VPS. Just run the
+excecutable and  access the  app from your  browser.  For  options and
+troubleshooting see https://lisp-journey.gitlab.io/web-dev/#shipping
 
 
 ** Development notes
 
 - after compiling a function and a  page refresh, we keep the state of
-  the app. Only a =reset= looses it.
+  the app. Only a =reset= looses it. That's nice.
 
 ** Troubleshooting
 
@@ -64,4 +76,7 @@ Don't know how to REQUIRE sb-cltl2.
 
 Set =SBCL_HOME= to the output of =(sb-int:sbcl-homedir-pathname)=.
 
-LICENCE: WTF public licence.
+
+** LICENCE
+
+WTF public licence.
