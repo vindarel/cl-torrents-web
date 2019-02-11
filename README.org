@@ -20,11 +20,9 @@ http://40ants.com/weblocks/quickstart.html
 
 ** Installation
 
-   To clone at =../=:
+   Dependencies to clone in local-projects (see =make install=):
 
 : https://github.com/vindarel/cl-torrents
-
-   To clone in local-projects:
 
 : https://github.com/40ants/weblocks
 
@@ -47,6 +45,11 @@ http://40ants.com/weblocks/quickstart.html
 And access it on http://localhost:40000/torrents (warn the =torrents= suffix).
 
 https://lisp-journey.gitlab.io/web-dev/#shipping
+
+Debian dependencies:
+
+- =libreadline-dev=, =libssl-dev=, =libssl1.0.2=.
+
 
 ** Development notes
 
