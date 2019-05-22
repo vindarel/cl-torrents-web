@@ -46,11 +46,6 @@
 (defun make-result (torrent)
   (make-instance 'result :torrent torrent))
 
-(defmethod get-html-tag ((widget result))
-  "Weblocks wraps our rendered widgets' html with a div and a custom
-id named dom123. But a div before the tr makes the table display badly.
-   So, here we tell Weblocks to use a tr, not a div. And we don't write the tr a second time in our `result`'s render method."
-  :tr)
 
 (defmethod render ((it result))
   (let ((torrent (result-torrent it)))
